@@ -1,6 +1,6 @@
 import requests
 import datetime
-
+import json
 
 
 class Champions:
@@ -16,15 +16,22 @@ class Champions:
             roles = ""
             for role in value['tags']:
                 roles += f"{role} "
-            self.list += f"|-- {key.upper()} - KEY: {value['key']}\n"
-            self.list += f"|------ {roles}\n"
-            self.list += "|--------------------------------\n"
+            self.list += f"|-- {key.upper()}\n" \
+                         f"|-- {value['key']}\n" \
+                         f"|------ {roles}\n" \
+                         f"|--------------------------------\n"
+
+    def get_champion_name(self, champion_id):
+        for key, value in self.champion_list['data'].items():
+            if int(value['key']) == int(champion_id):
+                print(key)
+                print(value)
 
 
 class LoL:
 
     def __init__(self, nick, region):
-        self.champions = Champions().list
+        self.champions = Champions()
         self.api = "RGAPI-90549562-ba86-4193-96b2-a3027e44a956"
         self.nick = nick
         self.region = region
@@ -57,6 +64,9 @@ class LoL:
 
 lol = LoL("SpirittoX", "eun1")
 
-# print(lol.champions)
+#print(Champions().champion_list)
+
+#print(lol.champions.list)
+lol.champions.get_champion_name(143)
 # print(lol.user_matches_info()) #mecze
 # print(json.dumps(lol.user_information_formatted(), indent=4))
