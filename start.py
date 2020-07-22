@@ -9,7 +9,22 @@ class Champions:
         self.champion_list = requests.get("http://ddragon.leagueoflegends.com/cdn/10.14.1/data/en_US/champion.json").json()
 
     def champions_list(self):
-        print(json.dumps(self.champion_list, indent=4))
+        print(json.dumps(self.champion_list['data'], indent=4))
+        # for key, value in self.champion_list['data'].items():
+        #
+        #     print(f"|-- {key} - KEY: {value['key']}")
+        #     print('|---', *value['tags'],sep=' ')
+        #     print("|-----------------------------")
+
+
+
+
+
+
+
+
+
+
 
 
 
