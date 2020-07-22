@@ -7,32 +7,23 @@ class Champions:
     def __init__(self):
         self.url = "http://ddragon.leagueoflegends.com/cdn/10.14.1/data/en_US/champion.json"
         self.champion_list = requests.get("http://ddragon.leagueoflegends.com/cdn/10.14.1/data/en_US/champion.json").json()
+        self.list = ""
+        self.champions_list()
 
     def champions_list(self):
-        print(json.dumps(self.champion_list['data'], indent=4))
-        # for key, value in self.champion_list['data'].items():
-        #
-        #     print(f"|-- {key} - KEY: {value['key']}")
-        #     print('|---', *value['tags'],sep=' ')
-        #     print("|-----------------------------")
+        for key, value in self.champion_list['data'].items():
+            roles = ""
+            for role in value['tags']:
+                roles += f"{role} "
+            self.list += f"|-- {key.upper()} - KEY: {value['key']}\n"
+            self.list += f"|------ {roles}\n"
+            self.list += "|--------------------------------\n"
 
-
-
-
-
-
-
-
-
-
-
-
-
-champions = Champions()
 
 class LoL:
 
     def __init__(self, nick, region):
+        self.champions = Champions().list
         self.api = "RGAPI-90549562-ba86-4193-96b2-a3027e44a956"
         self.nick = nick
         self.region = region
@@ -63,10 +54,11 @@ class LoL:
         for data in matches_info['matches']:
             print(datetime.datetime.fromtimestamp(data['timestamp']//1000))
 
-champions.champions_list()
+
 
 lol = LoL("SpirittoX", "eun1")
 
+print(lol.champions)
 
 #print(json.dumps(lol.get_user_information_formatted("SpirittoX", "eun1"), indent=4)) #user
 #print(json.dumps(lol.get_user_matches_info(lol.user_accountId), indent=4)) #mecze
